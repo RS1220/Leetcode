@@ -1,14 +1,11 @@
 class Solution {
 public:
     bool hasAlternatingBits(int n) {
-        int prev=n&1;
-        n>>=1;
-        while(n>0){
-            int curr=n&1;
-            if(curr==prev) return false;
 
-            prev=curr;
-            n>>=1;
+        bitset<32>b(n);
+        int highestBit=log2(n);
+        for(int i=0;i<=highestBit;i++){
+            if(b[i]==b[i+1]) return false;
         }
         return true;
     }
