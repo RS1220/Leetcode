@@ -1,17 +1,17 @@
 class Solution {
 public:
-    int rob(vector<int>& nums) {
-        int n=nums.size();
-        if(n==1) return nums[0];
-        if(n==2) return max(nums[0],nums[1]);
-        vector<int>dp(3);
-        dp[0]=nums[0];
-        dp[1]=max(nums[0],nums[1]);
-        for(int i=2;i<n;i++){
-            dp[2]=max(dp[1],(nums[i]+dp[0]));
-            dp[0]=dp[1];
-            dp[1]=dp[2];
-        }
-        return dp[2];
+    vector<int>dp;
+    int solve(vector<int>& nums , int idx)
+    {
+        if(idx==nums.size()-1) return nums[idx];
+        else if(idx==nums.size()-2) return max(nums[idx],nums[idx+1]);
+        if(dp[idx]!=-1) return dp[idx];
+        return dp[idx]=max(solve(nums,idx+1),(nums[idx]+solve(nums,idx+2)));
+
+
+    }
+    int rob(vector<int>& nums) 
+    {   dp.resize(nums.size(),-1);
+        return solve(nums,0);
     }
 };
