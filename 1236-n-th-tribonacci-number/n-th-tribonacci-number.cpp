@@ -1,19 +1,16 @@
 class Solution {
 public:
-//tabulation+space optimization
+    //recursion
+    vector<int>dp;
+    int helper(int n){
+         if(n==0) return 0;
+          if(n==1 || n==2) return 1;
+          if(dp[n]!=-1) return dp[n];
+
+          return dp[n]=helper(n-1)+helper(n-2)+helper(n-3);
+    }
     int tribonacci(int n) {
-        vector<int>dp(4);
-        if(n==0) return 0;
-        if(n==1 || n==2) return 1;
-        dp[0]=0;
-        dp[1]=1;
-        dp[2]=1;
-        for(int i=3;i<=n;i++){
-            dp[3]=dp[1]+dp[2]+dp[0];
-            dp[0]=dp[1];
-            dp[1]=dp[2];
-            dp[2]=dp[3];
-        }
-       return  dp[3];
+        dp.resize(n+1,-1);
+       return helper(n); 
     }
 };
