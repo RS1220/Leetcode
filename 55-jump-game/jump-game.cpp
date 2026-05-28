@@ -1,20 +1,19 @@
 class Solution {
 public:
+    //M1 recursion+memo
     vector<int>dp;
-    bool helper(int idx, vector<int>& nums){
-        if(idx>=nums.size()-1) return true;
-        if(dp[idx]!=-1) return dp[idx];
-        bool ans=false;
-        for(int i=1;i<=nums[idx];i++){
-            ans=ans|| helper(idx+i,nums);
-            if(ans) break;
-
-        }
-        return dp[idx]=ans;
+    bool solve(vector<int>& nums , int n, int idx){
+      if(idx==n-1) return true;
+      if(dp[idx]!=-1) return dp[idx];
+      for(int i=1;i<=nums[idx];i++){
+         if(solve(nums , n, idx+i)==true) return true;
+      }
+      return dp[idx]=false;
     }
     bool canJump(vector<int>& nums) {
-        dp.resize(nums.size() , -1);
-       return helper(0,nums);
-
+      
+        int n=nums.size();
+          dp.resize(n , -1);
+        return solve(nums , n , 0);
     }
 };
