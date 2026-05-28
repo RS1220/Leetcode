@@ -1,26 +1,25 @@
 class Solution {
 public:
-  vector<int>dp;
-   int solve(vector<int>& nums , int n ,int idx ){
-        if(idx>=n-1) return 0;
-         int ans=1e9;
+    int jump(vector<int>& nums) {
 
-         if(nums[idx]==0) return 1e9;
-         if(dp[idx]!=-1) return dp[idx];
+        int n = nums.size();
 
-        for(int i=1;i<=nums[idx];i++){
-             ans=min(ans , 1+solve(nums , n , i+idx));
+        vector<int> dp(n, 1e9);
+
+        // last index needs 0 jumps
+        dp[n - 1] = 0;
+
+        // move from back to front
+        for(int i = n - 2; i >= 0; i--) {
+
+            for(int j = 1; j <= nums[i]; j++) {
+
+                if(i + j < n) {
+                    dp[i] = min(dp[i], 1 + dp[i + j]);
+                }
+            }
         }
 
-       return  dp[idx]=ans;
-
-
-   }
-    int jump(vector<int>& nums) {
-         int n=nums.size();
-          dp.resize(n , -1);
-
-        return solve(nums , n,0);
-          
+        return dp[0];
     }
 };
