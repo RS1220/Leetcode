@@ -15,31 +15,25 @@ public:
         
 
         int ans=0;
-        int cnt=1;
+        int even=1;
+        int odd=0;
         
 
         for(int i=0;i<n;i++){
              if(arr[i]%2!=0){
-                ans+=cnt;
-              
+                ans=(ans+even)%mod;
+                
+               odd++;
                
 
              }
-             else  cnt++;
-        }
-
-        cnt=0;
-        ans=ans%mod;
-
-        for(int i=0;i<n;i++){
-             if(arr[i]%2==0){
-                ans+=cnt;
-              
-               
-
+             else {
+                ans=(ans+odd)%mod;;
+                even++;
              }
-             else  cnt++;
         }
+
+        
 
 
         return ans%mod;
