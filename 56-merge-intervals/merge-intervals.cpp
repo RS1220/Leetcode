@@ -1,26 +1,42 @@
-bool cmp(vector<int>&v1 , vector<int>&v2){
- return v1[1]<v2[1];
-}
 class Solution {
 public:
     vector<vector<int>> merge(vector<vector<int>>& intervals) {
-        //sort array in ascending order on the basis of second point
-        sort(intervals.begin() , intervals.end() , cmp);
-        vector<vector<int>> result;
         int n=intervals.size();
-        result.push_back(intervals[n-1]);
-        for(int i=n-2;i>=0;i--){
-            vector<int>curr=intervals[i];
-            if(curr[1]>=result[result.size()-1][0]){
-               // first.end>=second.start overlap
+        sort(intervals.begin() , intervals.end());
+         vector<vector<int>> result;
+        vector<int>ans(2);
 
-               result[result.size()-1][0]=min(curr[0] ,result[result.size()-1][0] );
-               result[result.size()-1][1]=max(curr[1] , result[result.size()-1][1]);
-            }
-            else{
-               result.push_back(intervals[i]);
-            }
+        int v1=intervals[0][0];
+        int v2=intervals[0][1];
+        for(int i=1;i<n;i++)
+        {
+           int n1=intervals[i][0];
+           int n2=intervals[i][1];
+
+           if(n1<=v2){
+            v1=min(n1,v1);
+            v2=max(v2,n2);
+           }
+
+           else {
+
+            ans[0]=v1;
+            ans[1]=v2;
+            result.push_back(ans);
+            v1=n1;
+            v2=n2;
+
+           }
         }
+
+        // vector<int>m=result.back();
+        // if(m[0]==v1 && m[1]==v2) return result;
+        ans[0]=v1;
+        ans[1]=v2;
+        result.push_back(ans);
+
+
         return result;
+
     }
 };
