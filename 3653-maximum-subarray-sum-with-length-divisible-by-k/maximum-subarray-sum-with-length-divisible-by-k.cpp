@@ -1,30 +1,42 @@
 class Solution {
 public:
-    long long maxSubarraySum(vector<int>& nums, int k) {
-        int n=nums.size();
-        vector<long long>prefSum(n);
-        prefSum[0]=nums[0];
+    long long maxSubarraySum(vector<int >& nums, int k) {
+          long long n=nums.size();
 
-        for(int i=1;i<n;i++){
-            prefSum[i]=nums[i]+prefSum[i-1];
+          vector<long long> prefix(n);
+
+          prefix[0]=nums[0];
+          
+          for(int i=1;i<n;i++){
+            prefix[i]=prefix[i-1]+nums[i];
+          }
+
+            long long ans=LLONG_MIN;
+        for(int m=0;m<k;m++){
+               int i=m;
+              long long currSum=0;
+              long long subSum=0;
+
+              long long j=i+k-1;
+            while(j<n){
+                 if(i==0){
+                    subSum=prefix[j];
+
+                 }
+                 else subSum=prefix[j]-prefix[i-1];
+                 currSum=max(currSum+subSum , subSum);
+
+                 ans=max(ans ,currSum );
+                 i=j+1;
+                 j=i+k-1;
+
+
+              
+             
+            }
+
         }
-
-        long long result =LLONG_MIN;
-
-        for(int start=0;start<k;start++){
-                long long currSum=0;
-                int i=start;
-                while(i<n && i+k-1<n){
-                    int j=i+k-1;
-
-                    long long subSum=prefSum[j]-((i>0)?prefSum[i-1]:0);
-
-                    currSum=max(subSum, currSum+subSum);
-                    result=max(result , currSum);
-                    i+=k;
-                }
-        }
-
-        return result;
+        return ans;
+        
     }
 };
