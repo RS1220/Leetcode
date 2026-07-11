@@ -14,24 +14,21 @@ public:
                else if(grid[i][j]==2) q.push({i,j});
             }
         }
-        int min=0;
-        q.push({-1,-1});
+        int minu=0;
+        if(f==0) return 0;
+       
 
         while(!q.empty()){
-            auto curr=q.front();
+             int x=q.size();
+            while(x--){
+
+                auto curr=q.front();
             q.pop();
             int r=curr.first;
             int c=curr.second;
-            if(r==-1 && c==-1){
-                min++;
-                if(!q.empty()) {
-                  q.push({-1,-1});
-                 
-                }
-                else break;
-            }
+           
 
-            else{
+           
                 for(int d=0;d<4;d++){
                 int nr=r+dir[d][0];
                 int nc=c+dir[d][1];
@@ -40,13 +37,19 @@ public:
                 if(grid[nr][nc]==2 || grid[nr][nc]==0) continue;
                 grid[nr][nc]=2;
                 f--;
+                
                 q.push({nr , nc});
 
-              }
+              
             }
+          
+
+            }
+              minu++;
+            
         }
        
-        return (f==0)? min-1 :-1;
+        return (f==0)? minu-1 :-1;
         
     }
 };
