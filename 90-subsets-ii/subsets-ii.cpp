@@ -1,28 +1,39 @@
-#include<iostream>
-#include<vector>
-#include<algorithm>
-using namespace std;
-
 class Solution {
 public:
-    void solve(int idx, vector<int>& nums, vector<int>& temp, vector<vector<int>>& ans){
-        ans.push_back(temp);
+    int n;
+    unordered_set<int>st;
+    void solve(vector<int>& nums ,vector<int>v,vector<vector<int>>&ans,int idx){
+      
+        ans.push_back(v);
+       
+       
 
-        for(int i = idx; i < nums.size(); i++){
-            if(i > idx && nums[i] == nums[i-1]) continue; // skip duplicate
+      
+            for(int i=idx ; i<n;i++){
+                if(i>idx && nums[i]==nums[i-1]) continue;
 
-            temp.push_back(nums[i]);
-            solve(i+1, nums, temp, ans);
-            temp.pop_back();
-        }
-    }
+                v.push_back(nums[i]);
+                solve(nums , v , ans ,i+1);
+                v.pop_back();
+            }
 
+        
+       }
+
+
+    
     vector<vector<int>> subsetsWithDup(vector<int>& nums) {
-        sort(nums.begin(), nums.end());
-        vector<vector<int>> ans;
-        vector<int> temp;
 
-        solve(0, nums, temp, ans);
-        return ans;
+        sort(nums.begin(),nums.end());
+        n=nums.size();
+
+        vector<vector<int>>ans;
+        vector<int>v;
+         solve( nums ,v,ans, 0);
+         return ans;
+
+
+        
+        
     }
 };
