@@ -11,32 +11,31 @@
  */
 class Solution {
 public:
-    //M2 . vector and preorder
-    int levels(TreeNode* root){
-        if(root==NULL) return 0;
-        return 1+max(levels(root->left) , levels(root->right));
-    }
-    void print(TreeNode* root , vector<vector<int>>& ans , int level){
-          
-          if(root==NULL) return ;
-          ans[level].push_back(root->val);
-          print(root->left , ans , level+1);
-          print(root->right , ans , level+1);
-
-    }
-
     vector<vector<int>> levelOrder(TreeNode* root) {
-
-        vector<vector<int>>ans;
-        int n=levels(root);
-        for(int i=1;i<=n;i++){
+        vector<vector<int>> ans;
+        if(root==NULL) return ans;
+        queue<TreeNode*>q;
+        q.push(root);
+        while(!q.empty()){
+            int n=q.size();
             vector<int>v;
-            ans.push_back(v);
-
+            for(int i=0;i<n;i++){
+                
+                TreeNode* curr=q.front();
+                q.pop();
+                v.push_back(curr->val);
+                if(curr->left!=NULL){
+                    q.push(curr->left);
+                }
+                if(curr->right!=NULL){
+                    q.push(curr->right);
+                }
+              
+            }
+             ans.push_back(v);
+            
         }
-        print(root , ans , 0);
         return ans;
-
         
     }
 };
