@@ -11,36 +11,32 @@
  */
 class Solution {
 public:
-   int level(TreeNode* root){
-    if(root==NULL) return 0;
-    return 1+max(level(root->left) , level(root->right));
-   }
-   void print(TreeNode* root , int curr , int level , vector<int>&v){
-    if(root==NULL) return ;
-    if(curr==level){
-        v.push_back(root->val);
-        return;
+    //M2 . vector and preorder
+    int levels(TreeNode* root){
+        if(root==NULL) return 0;
+        return 1+max(levels(root->left) , levels(root->right));
     }
-
-    print(root->left , curr+1 , level , v);
-    print(root->right , curr+1 , level , v);
-
-   }
-   void levelO(TreeNode* root , vector<vector<int>>& ans){
-    int n=level(root);
-    for(int i=1;i<=n;i++){
-
-        vector<int>v;
-        print(root , 1 , i,v);
-        ans.push_back(v);
+    void print(TreeNode* root , vector<vector<int>>& ans , int level){
+          
+          if(root==NULL) return ;
+          ans[level].push_back(root->val);
+          print(root->left , ans , level+1);
+          print(root->right , ans , level+1);
 
     }
 
-   }
     vector<vector<int>> levelOrder(TreeNode* root) {
-         vector<vector<int>>ans;
-         levelO(root , ans);
-         return ans;
 
+        vector<vector<int>>ans;
+        int n=levels(root);
+        for(int i=1;i<=n;i++){
+            vector<int>v;
+            ans.push_back(v);
+
+        }
+        print(root , ans , 0);
+        return ans;
+
+        
     }
 };
