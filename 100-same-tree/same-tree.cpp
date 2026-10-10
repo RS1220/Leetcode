@@ -18,10 +18,12 @@ public:
         if(p->val!=q->val) return false;
         bool lst=isSameTree(p->left , q->left);
         if(!lst) return false;
-        bool rst=isSameTree(p->right , q->right);
+         bool rst=isSameTree(p->right , q->right);
         if(!rst) return false;
 
-
         return true;
+
+
+        
     }
 };
