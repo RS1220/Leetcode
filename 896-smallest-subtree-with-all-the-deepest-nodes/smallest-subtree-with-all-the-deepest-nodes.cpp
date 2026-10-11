@@ -11,20 +11,22 @@
  */
 class Solution {
 public:
-    pair<int,TreeNode*> solve(TreeNode* root){
-        if(!root) return{0,root};
-        
+    pair<int , TreeNode*>solve(TreeNode* root){
+
+        if(root==NULL) return {0,root};
+
         auto l=solve(root->left);
         auto r=solve(root->right);
 
-         if(l.first==r.first){
-            return {l.first+1 , root};
+        if(l.first==r.first) return {l.first+1 , root};
+        else if(l.first>r.first) return {l.first+1 , l.second};
+        return {r.first+1 , r.second};
 
-         }
-         else if(l.first>r.first)  return {l.first+1 , l.second};
-         else  return {r.first+1 , r.second};
+
+
     }
     TreeNode* subtreeWithAllDeepest(TreeNode* root) {
         return solve(root).second;
+        
     }
 };
