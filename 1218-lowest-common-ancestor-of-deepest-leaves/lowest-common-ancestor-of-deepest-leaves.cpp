@@ -11,20 +11,34 @@
  */
 class Solution {
 public:
-     pair<int,TreeNode*> solve(TreeNode* root){
-        if(!root) return{0,root};
-        
-        auto l=solve(root->left);
-        auto r=solve(root->right);
+    unordered_map<int ,int>mp;
+    int maxD=0;
 
-         if(l.first==r.first){
-            return {l.first+1 , root};
+    void depth(TreeNode* root , int d){
+        if(root==NULL) return;
+        maxD=max(maxD , d);
+        mp[root->val]=d;
+        depth(root->left ,  d+1);
+        depth(root->right , d+1);
 
-         }
-         else if(l.first>r.first)  return {l.first+1 , l.second};
-         else  return {r.first+1 , r.second};
+
     }
+
+    TreeNode* lca(TreeNode* root){
+        if(root==NULL || mp[root->val]==maxD) return root;
+
+        TreeNode* leftN=lca(root->left);
+        TreeNode* rightN=lca(root->right);
+
+        if(leftN && rightN) return root;
+        return leftN!=NULL?leftN:rightN;
+    }
+
+
+
     TreeNode* lcaDeepestLeaves(TreeNode* root) {
-        return solve(root).second;
+
+        depth(root  , 0);
+        return lca(root);
     }
 };
