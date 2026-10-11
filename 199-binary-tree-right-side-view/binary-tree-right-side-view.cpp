@@ -16,31 +16,20 @@ public:
         return 1+max(levels(root->left) , levels(root->right) );
 
     }
-    void nthOrder(TreeNode* root ,int curr , int required, vector<int>&ans){
+    void preorder(TreeNode* root ,vector<int>&ans , int level){
         if(root==NULL) return;
-        if(curr==required){
-            ans[required]=root->val;
-            return ;
-        }
-        nthOrder(root->left , curr+1 , required , ans);
-        nthOrder(root->right , curr+1 , required , ans);
+        ans[level]=root->val;
+        preorder(root->left , ans  , level +1);
+        preorder(root->right , ans  , level +1);
 
 
     }
-    void levelOrder(TreeNode* root , vector<int>&ans){
-
-        int n=ans.size();
-        for(int i=0;i<n;i++){
-
-            nthOrder(root , 0 , i,ans);
-
-        }
-
-    }
+    
+    
     vector<int> rightSideView(TreeNode* root) {
         int n=levels(root);
         vector<int>ans(n,0);
-        levelOrder(root , ans);
+        preorder(root , ans , 0);
         return ans;
     }
 };
